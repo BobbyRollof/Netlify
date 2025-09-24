@@ -5,7 +5,7 @@ export default function Home() {
         <div className="container nav">
           <div className="brand">
             <span className="brand-badge" aria-hidden="true"></span>
-            <span>Kitesurfdag Brouwersdam 2</span>
+            <span>Kitesurfdag Brouwersdam</span>
           </div>
           <nav>
             <a href="#tickets" className="cta">Koop tickets</a>
