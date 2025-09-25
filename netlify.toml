@@ -1,11 +1,10 @@
-# netlify.toml
 [build]
   command = "npm run build"
-  publish = ".next"    # Netlify Next.js Runtime leest hieruit
+  publish = ".next"
 
 [build.environment]
   NODE_VERSION = "18"
 
-# (Optioneel) Netlify Functions instellingen
 [functions]
   node_bundler = "esbuild"
+  external_node_modules = ["stripe"]
