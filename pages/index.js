@@ -71,43 +71,7 @@ export default function Home() {
         </div>
       </section>
 
-      <section id="tickets" aria-labelledby="tickets-title">
-        <div className="container">
-          <div className="section-head">
-            <h2 id="tickets-title">Tickets</h2>
-            <p className="muted">Kies jouw moment – early voor voordeel, late voor FOMO.</p>
-          </div>
-
-          <div className="tickets">
-            <TicketCard
-              title="Early Bird"
-              price="€119"
-              strike="€135"
-              limit="10 plekken"
-              slug="early"
-              note="Sluit bij uitverkoop of op datum X (wat eerst komt)."
-            />
-            <TicketCard
-              title="Regular"
-              price="€129"
-              limit="20 plekken"
-              slug="regular"
-              note="Standaardprijs tot 10 dagen voor het event."
-            />
-            <TicketCard
-              title="Late / Last-minute"
-              price="€135"
-              limit="10 plekken"
-              slug="late"
-              note="Opent 10 dagen vooraf of na 30+ verkochte tickets."
-            />
-          </div>
-
-          <div style={{marginTop:18}} className="muted">
-            Betalingen verlopen via Stripe Checkout (iDEAL, Bancontact, creditcard). Veilig & vertrouwd.
-          </div>
-        </div>
-      </section>
+      <Tickets />
 
       <section id="faq">
         <div className="container">
@@ -149,59 +113,3 @@ export default function Home() {
 
       <footer>
         <div className="container" style={{display:'flex',gap:16,flexWrap:'wrap',alignItems:'center',justifyContent:'space-between'}}>
-          <small>© {new Date().getFullYear()} Kitesurfdag Brouwersdam</small>
-          <small><a href="#">Voorwaarden</a> • <a href="#">Privacy</a> • <a href="#">Contact</a></small>
-        </div>
-      </footer>
-
-      <script
-        dangerouslySetInnerHTML={{
-          __html: `
-            document.querySelectorAll('a[href^="#"]').forEach(a=>{
-              a.addEventListener('click', e=>{
-                const id=a.getAttribute('href').slice(1);
-                const el=document.getElementById(id);
-                if(el){ e.preventDefault(); el.scrollIntoView({behavior:'smooth', block:'start'}); }
-              });
-            });
-          `
-        }}
-      />
-    </>
-  );
-}
-
-function TicketCard({ title, price, strike, limit, slug, note }) {
-  const buy = async () => {
-    try {
-      const res = await fetch(`/api/checkout/${slug}`, { method: 'POST' });
-      const data = await res.json();
-      if (data?.url) {
-        window.location.href = data.url;
-      } else {
-        alert('Kon afrekenen niet starten. Probeer later opnieuw.');
-      }
-    } catch (e) {
-      alert('Er ging iets mis met afrekenen.');
-    }
-  };
-  return (
-    <div className="card ticket">
-      <div className="meta">
-        <strong>{title}</strong>
-        <span className="limit">{limit}</span>
-      </div>
-      <p>
-        <span className="price">{price}</span>{' '}
-        {strike ? <span className="strike">{strike}</span> : null}
-      </p>
-      <ul className="list">
-        <li>Les 2,5u + vrij surfen 2u</li>
-        <li>Lunchbuffet & pizza-diner</li>
-        <li>Beachgames inbegrepen</li>
-      </ul>
-      <button className="btn btn-primary" onClick={buy}>Koop {title}</button>
-      <small className="muted">{note}</small>
-    </div>
-  );
-}
